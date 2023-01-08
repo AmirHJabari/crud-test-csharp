@@ -28,7 +28,7 @@ public class ApiResult<TData> : ApiResult
         this.Data = data;
     }
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public TData Data { get; set; }
 
     public override ApiResult<TData> WithStatus(bool success = true)

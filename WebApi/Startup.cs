@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using WebApi.Extensions;
+using WebApi.Filters;
 
 namespace WebApi;
 
@@ -20,6 +21,7 @@ public class Startup
     }
 
     public IConfiguration Configuration { get; }
+    private bool IsSwaggerOn => Configuration.GetValue<bool>("IsSwaggerOn");
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
@@ -40,7 +42,7 @@ public class Startup
         services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>();
 
-        services.AddControllers();
+        services.AddControllers(options => options.Filters.Add<ApiExceptionFilterAttribute>());
         services.AddEndpointsApiExplorer();
         services.AddSwagger();
 
@@ -71,8 +73,6 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
-            app.UseMigrationsEndPoint();
-            app.UseSwaggerAndSwaggerUI();
         }
         else
         {
@@ -81,11 +81,18 @@ public class Startup
             app.UseHsts();
         }
 
+        if (IsSwaggerOn)
+        {
+            app.UseMigrationsEndPoint();
+            app.UseSwaggerAndSwaggerUI();
+        }
+
         app.UseCors(PublicPolicy);
 
         app.UseRouting();
         app.UseHealthChecks("/health");
-        app.UseHttpsRedirection();
+        if (env.EnvironmentName != "Docker" && env.EnvironmentName != "Dockercompose")
+            app.UseHttpsRedirection();
 
         app.UseEndpoints(endpoints => endpoints.MapControllers());
     }

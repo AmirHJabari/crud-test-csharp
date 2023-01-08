@@ -1,4 +1,5 @@
 ﻿using FluentValidation.Results;
+using System;
 
 namespace Application.Common.Exceptions;
 
@@ -17,6 +18,8 @@ public class ValidationException : Exception
             .GroupBy(e => e.PropertyName, e => e.ErrorMessage)
             .ToDictionary(failureGroup => failureGroup.Key, failureGroup => failureGroup.ToArray());
     }
+
+    public ApiResult<IDictionary<string, string[]>> AsApiResult() => new(false, Message, Errors);
 
     public IDictionary<string, string[]> Errors { get; }
 }

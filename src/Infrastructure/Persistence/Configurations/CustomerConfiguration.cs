@@ -20,14 +20,16 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
             .IsRequired();
 
         builder.Property(x => x.PhoneNumber)
-            .HasMaxLength(15);
+            .HasMaxLength(15)
+            .IsRequired();
 
         builder.Property(b => b.Email)
             .HasMaxLength(255)
             .IsRequired();
 
         builder.Property(x => x.BankAccountNumber)
-            .HasMaxLength(16);
+            .HasMaxLength(16)
+            .IsRequired();
 
         // Indexes
         builder.HasIndex(b => b.Email)

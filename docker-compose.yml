@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  crudtest.db:
+    image: postgres:15.1
+    environment:
+     - POSTGRES_USER=webapi
+     - POSTGRES_PASSWORD=AifG0unt.Ap1@pass
+     - POSTGRES_DB=CrudTest
+    ports:
+     - "26003:5432"
+    volumes:
+     - postgres_data:/var/lib/postgresql/data
+
+  webapi:
+    image: ${DOCKER_REGISTRY-}webapi
+    depends_on:
+     - crudtest.db
+    build:
+      context: .
+      dockerfile: WebApi/Dockerfile
+      
+volumes:
+  postgres_data:

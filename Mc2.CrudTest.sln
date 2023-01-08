@@ -7,17 +7,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{279F8491-09E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D94E4743-4A65-45E0-B1E7-79672E7892F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "src\Domain\Domain.csproj", "{24840893-9B1F-48A9-B7BB-CE53466730AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Domain\Domain.csproj", "{24840893-9B1F-48A9-B7BB-CE53466730AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{896BC060-1FE9-4E10-A717-EF6D5C3D6A0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{896BC060-1FE9-4E10-A717-EF6D5C3D6A0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\Application\Application.csproj", "{355B8891-1938-4963-87B0-DC579B923C5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Application\Application.csproj", "{355B8891-1938-4963-87B0-DC579B923C5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{12DE9230-839B-4A12-8354-F1756B77F45A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{12DE9230-839B-4A12-8354-F1756B77F45A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{83C9386A-564F-4B20-AD71-3EA549B13FD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI", "WebUI\WebUI.csproj", "{83C9386A-564F-4B20-AD71-3EA549B13FD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcceptanceTests", "AcceptanceTests\AcceptanceTests.csproj", "{FE0F857A-0C3D-4E8D-BB40-C5CB837B3B9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcceptanceTests", "AcceptanceTests\AcceptanceTests.csproj", "{FE0F857A-0C3D-4E8D-BB40-C5CB837B3B9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Client", "WebApi.Client\WebApi.Client.csproj", "{00778CF4-9659-4DAC-917C-9B2C9F15F71A}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{8AB62AE9-1CDC-46D5-9153-A2EBCC34D4C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,14 @@ Global
 		{FE0F857A-0C3D-4E8D-BB40-C5CB837B3B9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE0F857A-0C3D-4E8D-BB40-C5CB837B3B9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE0F857A-0C3D-4E8D-BB40-C5CB837B3B9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00778CF4-9659-4DAC-917C-9B2C9F15F71A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00778CF4-9659-4DAC-917C-9B2C9F15F71A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00778CF4-9659-4DAC-917C-9B2C9F15F71A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00778CF4-9659-4DAC-917C-9B2C9F15F71A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AB62AE9-1CDC-46D5-9153-A2EBCC34D4C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AB62AE9-1CDC-46D5-9153-A2EBCC34D4C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AB62AE9-1CDC-46D5-9153-A2EBCC34D4C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AB62AE9-1CDC-46D5-9153-A2EBCC34D4C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +72,7 @@ Global
 		{12DE9230-839B-4A12-8354-F1756B77F45A} = {279F8491-09E1-482F-A07C-4DB90D4CC065}
 		{83C9386A-564F-4B20-AD71-3EA549B13FD8} = {279F8491-09E1-482F-A07C-4DB90D4CC065}
 		{FE0F857A-0C3D-4E8D-BB40-C5CB837B3B9F} = {D94E4743-4A65-45E0-B1E7-79672E7892F0}
+		{00778CF4-9659-4DAC-917C-9B2C9F15F71A} = {279F8491-09E1-482F-A07C-4DB90D4CC065}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B5A26C9-68C1-49D9-9F32-AF907A1730C2}
