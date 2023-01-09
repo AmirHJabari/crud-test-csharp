@@ -28,7 +28,7 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
             FirstName = request.FirstName,
             LastName = request.LastName,
             BankAccountNumber = request.BankAccountNumber,
-            DateOfBirth = request.DateOfBirth,
+            DateOfBirth = request.DateOfBirth.ToUniversalTime(),
             PhoneNumber = request.PhoneNumber
         };
 

@@ -1,5 +1,6 @@
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 var builder = Host.CreateDefaultBuilder(args);
 builder.ConfigureWebHostDefaults(webBuilder =>
