@@ -34,8 +34,6 @@ namespace AcceptanceTests.Hooks
 
             var confirmationUrl = config["WebApi:BaseAddress"];
 
-            using var volume = new Builder().UseVolume("crudtest-tests-volume").RemoveOnDispose().Build();
-
             _compositeService = new Builder()
                     .UseContainer()
                     .UseCompose()

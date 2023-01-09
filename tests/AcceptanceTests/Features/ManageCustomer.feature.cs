@@ -80,14 +80,14 @@ namespace AcceptanceTests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Customer gets created successfully")]
+        [Xunit.SkippableFactAttribute(DisplayName="Customers get created successfully")]
         [Xunit.TraitAttribute("FeatureTitle", "Manage customer in the system")]
-        [Xunit.TraitAttribute("Description", "Customer gets created successfully")]
-        public void CustomerGetsCreatedSuccessfully()
+        [Xunit.TraitAttribute("Description", "Customers get created successfully")]
+        public void CustomersGetCreatedSuccessfully()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Customer gets created successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Customers get created successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 3
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -103,6 +103,7 @@ namespace AcceptanceTests.Features
                             "LastName",
                             "Email",
                             "DateOfBirth",
+                            "PhoneCountryCode",
                             "PhoneNumber",
                             "BankAccountNumber"});
                 table1.AddRow(new string[] {
@@ -110,20 +111,77 @@ namespace AcceptanceTests.Features
                             "Jabari",
                             "test1@gmail.com",
                             "2002-12-02",
-                            "+989051877561",
-                            "1234123412341234"});
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
                 table1.AddRow(new string[] {
                             "Amir H.",
                             "Jabari",
                             "test2@gmail.com",
                             "2002-12-03",
-                            "+989051877561",
-                            "1234123412341234"});
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
 #line 4
   testRunner.When("I create customers with the following details", ((string)(null)), table1, "When ");
 #line hidden
 #line 8
   testRunner.Then("the customers are created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Customers get deleted successfully")]
+        [Xunit.TraitAttribute("FeatureTitle", "Manage customer in the system")]
+        [Xunit.TraitAttribute("Description", "Customers get deleted successfully")]
+        public void CustomersGetDeletedSuccessfully()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Customers get deleted successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 10
+ this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                            "FirstName",
+                            "LastName",
+                            "Email",
+                            "DateOfBirth",
+                            "PhoneCountryCode",
+                            "PhoneNumber",
+                            "BankAccountNumber"});
+                table2.AddRow(new string[] {
+                            "Amir H.",
+                            "Jabari",
+                            "test21@gmail.com",
+                            "2002-12-21",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+                table2.AddRow(new string[] {
+                            "Amir H.",
+                            "Jabari",
+                            "test22@gmail.com",
+                            "2002-12-23",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+#line 11
+  testRunner.Given("Following customers created", ((string)(null)), table2, "Given ");
+#line hidden
+#line 15
+  testRunner.When("Created customers in previous step get deleted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 16
+  testRunner.Then("Customers are deleted successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

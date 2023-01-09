@@ -3,6 +3,7 @@ using System.Net;
 using Application.Entities.Customers.Commands.CreateCustomerCommand;
 using System.Text.Json;
 using Application.Entities.Customers.Queries.GetCustomerById;
+using Application.Entities.Customers.Commands.DeleteCustomerById;
 
 namespace WebApi.Client.HttpClients;
 
@@ -32,7 +33,6 @@ public class CustomerHttpClient : IDisposable
         return await res.Content.ReadFromJsonAsync<ApiResult<int>>();
     }
 
-    /// <exception cref="ApiValidationException"/>
     /// <exception cref="ApiNotFoundException"/>
     /// <exception cref="ApiBaseException"/>
     public async Task<ApiResult<CustomerDto>> GetCustomerByIdAsync(GetCustomerById request, CancellationToken cancellationToken = default)
@@ -45,6 +45,20 @@ public class CustomerHttpClient : IDisposable
         }
 
         return await res.Content.ReadFromJsonAsync<ApiResult<CustomerDto>>();
+    }
+
+    /// <exception cref="ApiNotFoundException"/>
+    /// <exception cref="ApiBaseException"/>
+    public async Task<ApiResult<bool>> DeleteCustomerByIdAsync(DeleteCustomerById request, CancellationToken cancellationToken = default)
+    {
+        var res = await _client.DeleteAsync($"api/v1/Customers?Id={request.Id}", cancellationToken);
+
+        if (!res.IsSuccessStatusCode)
+        {
+            throw await GetPropperException(res);
+        }
+
+        return await res.Content.ReadFromJsonAsync<ApiResult<bool>>();
     }
 
     private async Task<Exception> GetPropperException(HttpResponseMessage res)

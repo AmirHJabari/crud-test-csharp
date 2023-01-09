@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Application.Common.Models;
 using Application.Entities.Customers.Commands.CreateCustomerCommand;
 using Application.Entities.Customers.Queries.GetCustomerById;
+using Application.Entities.Customers.Commands.DeleteCustomerById;
 
 namespace WebApi.Controllers.V1;
 
@@ -19,6 +20,13 @@ public class CustomersController : ApiControllerBase<CustomersController>
 
     [HttpGet]
     public async Task<ActionResult<ApiResult<CustomerDto>>> GetById([FromQuery] GetCustomerById request,
+        CancellationToken cancellationToken)
+    {
+        return await Mediator.Send(request, cancellationToken);
+    }
+
+    [HttpDelete]
+    public async Task<ActionResult<ApiResult<bool>>> DeleteById([FromQuery] DeleteCustomerById request,
         CancellationToken cancellationToken)
     {
         return await Mediator.Send(request, cancellationToken);
