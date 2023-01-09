@@ -4,6 +4,8 @@ using Application.Entities.Customers.Commands.CreateCustomerCommand;
 using System.Text.Json;
 using Application.Entities.Customers.Queries.GetCustomerById;
 using Application.Entities.Customers.Commands.DeleteCustomerById;
+using Application.Entities.Customers.Queries.GetCustomersWithPagination;
+using Application.Common.Models;
 
 namespace WebApi.Client.HttpClients;
 
@@ -30,21 +32,36 @@ public class CustomerHttpClient : IDisposable
             throw await GetPropperException(res);
         }
 
-        return await res.Content.ReadFromJsonAsync<ApiResult<int>>();
+        return await res.Content.ReadFromJsonAsync<ApiResult<int>>(cancellationToken: cancellationToken);
     }
 
     /// <exception cref="ApiNotFoundException"/>
     /// <exception cref="ApiBaseException"/>
     public async Task<ApiResult<CustomerDto>> GetCustomerByIdAsync(GetCustomerById request, CancellationToken cancellationToken = default)
     {
-        var res = await _client.GetAsync($"api/v1/Customers?Id={request.Id}", cancellationToken);
+        var res = await _client.GetAsync($"api/v1/Customers/{request.Id}", cancellationToken);
 
         if (!res.IsSuccessStatusCode)
         {
             throw await GetPropperException(res);
         }
 
-        return await res.Content.ReadFromJsonAsync<ApiResult<CustomerDto>>();
+        return await res.Content.ReadFromJsonAsync<ApiResult<CustomerDto>>(cancellationToken: cancellationToken);
+    }
+
+    /// <exception cref="ApiBaseException"/>
+    public async Task<ApiResult<PaginatedList<CustomerPaginationDto>>> GetCustomersWithPaginationAsync(GetCustomersWithPagination request, CancellationToken cancellationToken = default)
+    {
+        var res = await _client.GetAsync(
+                $"api/v1/Customers?PageNumber={request.PageNumber}&PageSize={request.PageSize}",
+                cancellationToken: cancellationToken);
+
+        if (!res.IsSuccessStatusCode)
+        {
+            throw await GetPropperException(res);
+        }
+
+        return await res.Content.ReadFromJsonAsync<ApiResult<PaginatedList<CustomerPaginationDto>>>(cancellationToken: cancellationToken);
     }
 
     /// <exception cref="ApiNotFoundException"/>
@@ -58,7 +75,7 @@ public class CustomerHttpClient : IDisposable
             throw await GetPropperException(res);
         }
 
-        return await res.Content.ReadFromJsonAsync<ApiResult<bool>>();
+        return await res.Content.ReadFromJsonAsync<ApiResult<bool>>(cancellationToken: cancellationToken);
     }
 
     private async Task<Exception> GetPropperException(HttpResponseMessage res)

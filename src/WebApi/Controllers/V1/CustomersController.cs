@@ -5,6 +5,7 @@ using Application.Common.Models;
 using Application.Entities.Customers.Commands.CreateCustomerCommand;
 using Application.Entities.Customers.Queries.GetCustomerById;
 using Application.Entities.Customers.Commands.DeleteCustomerById;
+using Application.Entities.Customers.Queries.GetCustomersWithPagination;
 
 namespace WebApi.Controllers.V1;
 
@@ -18,8 +19,15 @@ public class CustomersController : ApiControllerBase<CustomersController>
         return await Mediator.Send(request, cancellationToken);
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ApiResult<CustomerDto>>> GetById([Required, FromRoute] int id,
+        CancellationToken cancellationToken)
+    {
+        return await Mediator.Send(new GetCustomerById() { Id = id }, cancellationToken);
+    }
+
     [HttpGet]
-    public async Task<ActionResult<ApiResult<CustomerDto>>> GetById([FromQuery] GetCustomerById request,
+    public async Task<ActionResult<ApiResult<PaginatedList<CustomerPaginationDto>>>> GetPaginatedList([FromQuery] GetCustomersWithPagination request,
         CancellationToken cancellationToken)
     {
         return await Mediator.Send(request, cancellationToken);

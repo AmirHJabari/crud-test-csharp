@@ -1,11 +1,16 @@
 ﻿using BoDi;
 using Ductus.FluentDocker;
 using Ductus.FluentDocker.Builders;
+using Ductus.FluentDocker.Commands;
+using Ductus.FluentDocker.Common;
+using Ductus.FluentDocker.Extensions;
 using Ductus.FluentDocker.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using WebApi.Client.HttpClients;
 
@@ -23,7 +28,7 @@ namespace AcceptanceTests.Hooks
         }
 
         [BeforeTestRun]
-        public static void DockerComposeUp()
+        public static async Task DockerComposeUp()
         {
             var config = LoadConfiguration();
             var dockerComposeFileName = config["DockerComposeFileName"];
@@ -39,10 +44,26 @@ namespace AcceptanceTests.Hooks
                     .UseCompose()
                     .FromFile(dockerComposePath, dockerComposeOverridePath)
                     .RemoveOrphans()
-                    .WaitForHttp("webapi", $"{confirmationUrl}/health",
-                        continuation: (response, _) => response.Code != System.Net.HttpStatusCode.OK ? 2000 : 0)
                     .Build()
                 .Start();
+
+            using var client = new HttpClient() { BaseAddress = new Uri(confirmationUrl) };
+            for (int i = 0; i < 60; i++)
+            {
+                if (i > 60) throw new FluentDockerException("Failed to wait for webapi service");
+                try
+                {
+                    var res = await client.GetAsync($"api/v1/Customers?PageNumber=1&PageSize=5");
+                    var body = await res.Content.ReadAsStringAsync();
+                    if (res.StatusCode == HttpStatusCode.OK && body.Contains("\"isSuccess\":true", StringComparison.Ordinal))
+                        break;
+                }
+                catch { }
+                finally
+                {
+                    await Task.Delay(1000);
+                }
+            }
         }
 
         [AfterTestRun]

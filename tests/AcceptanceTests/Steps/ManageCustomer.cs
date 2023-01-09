@@ -1,6 +1,7 @@
 ﻿using Application.Entities.Customers.Commands.CreateCustomerCommand;
 using Application.Entities.Customers.Commands.DeleteCustomerById;
 using Application.Entities.Customers.Queries.GetCustomerById;
+using Application.Entities.Customers.Queries.GetCustomersWithPagination;
 using Ductus.FluentDocker.Commands;
 using FluentAssertions;
 using TechTalk.SpecFlow.Assist;
@@ -87,6 +88,36 @@ public class ManageCustomer
             Func<Task> operation = () => _client.GetCustomerByIdAsync(new GetCustomerById() { Id = item });
 
             await operation.Should().ThrowAsync<ApiNotFoundException>();
+        }
+    }
+
+
+
+    [When(@"All following customers created")]
+    public async Task WhenAllFollowingCustomersCreated(Table table)
+    {
+        var commands = table.CreateSet<CreateCustomerCommand>();
+        var createdCustomers = new List<(int, CreateCustomerCommand)>();
+
+        foreach (var command in commands)
+        {
+            var res = await _client.CreateAsync(command);
+            createdCustomers.Add((res.Data, command));
+        }
+
+        _scenarioContext.Add("CreatedCustomers", createdCustomers);
+    }
+
+    [Then(@"Customers are returned successfully with pagination")]
+    public async Task ThenCustomersAreReturnedSuccessfullyWithPagination()
+    {
+        var createdCustomers = _scenarioContext.Get<List<(int, CreateCustomerCommand)>>("CreatedCustomers");
+
+        var customers = await _client.GetCustomersWithPaginationAsync(new GetCustomersWithPagination() { PageNumber = 1, PageSize = 50 });
+
+        foreach (var cc in createdCustomers)
+        {
+            customers.Data.Items.First(c => c.Id == cc.Item1).Should().BeEquivalentTo(cc.Item2);
         }
     }
 }

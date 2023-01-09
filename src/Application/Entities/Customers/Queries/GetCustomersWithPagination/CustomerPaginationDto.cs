@@ -1,6 +1,12 @@
-﻿namespace Application.Entities.Customers.Queries.GetCustomerById;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class CustomerDto : IMapFrom<Customer>
+namespace Application.Entities.Customers.Queries.GetCustomersWithPagination;
+
+public class CustomerPaginationDto : IMapFrom<Customer>
 {
     public int Id { get; set; }
     public string FirstName { get; set; }

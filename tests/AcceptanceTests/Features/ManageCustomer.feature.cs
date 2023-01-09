@@ -187,6 +187,114 @@ namespace AcceptanceTests.Features
             this.ScenarioCleanup();
         }
         
+        [Xunit.SkippableFactAttribute(DisplayName="Customers pagination returns correct data get")]
+        [Xunit.TraitAttribute("FeatureTitle", "Manage customer in the system")]
+        [Xunit.TraitAttribute("Description", "Customers pagination returns correct data get")]
+        public void CustomersPaginationReturnsCorrectDataGet()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Customers pagination returns correct data get", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 18
+ this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                            "FirstName",
+                            "LastName",
+                            "Email",
+                            "DateOfBirth",
+                            "PhoneCountryCode",
+                            "PhoneNumber",
+                            "BankAccountNumber"});
+                table3.AddRow(new string[] {
+                            "Amir H.",
+                            "Jabari",
+                            "test21@gmail.com",
+                            "2002-12-21",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+                table3.AddRow(new string[] {
+                            "Amir H.",
+                            "Jabari",
+                            "test22@gmail.com",
+                            "2002-12-23",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+                table3.AddRow(new string[] {
+                            "Amir H.",
+                            "Jabari",
+                            "test23@gmail.com",
+                            "2002-12-24",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+                table3.AddRow(new string[] {
+                            "Amir H.",
+                            "Jabari",
+                            "test24@gmail.com",
+                            "2002-12-25",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+                table3.AddRow(new string[] {
+                            "Amir H.",
+                            "Jabari",
+                            "test25@gmail.com",
+                            "2002-12-26",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+                table3.AddRow(new string[] {
+                            "Amir H.",
+                            "Jabari",
+                            "test26@gmail.com",
+                            "2002-12-27",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+                table3.AddRow(new string[] {
+                            "Amir H.",
+                            "Jabari",
+                            "test27@gmail.com",
+                            "2002-12-28",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+                table3.AddRow(new string[] {
+                            "Amir H.",
+                            "Jabari",
+                            "test28@gmail.com",
+                            "2002-12-29",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+                table3.AddRow(new string[] {
+                            "Amir H.",
+                            "Jabari",
+                            "test29@gmail.com",
+                            "2002-12-30",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+#line 19
+  testRunner.When("All following customers created", ((string)(null)), table3, "When ");
+#line hidden
+#line 30
+  testRunner.Then("Customers are returned successfully with pagination", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable
