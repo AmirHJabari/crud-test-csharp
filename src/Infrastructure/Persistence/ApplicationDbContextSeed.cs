@@ -16,7 +16,8 @@ public static class ApplicationDbContextSeed
                 LastName = "Jabari",
                 Email = "amirhamzehjabari@gmail.com",
                 DateOfBirth = new DateTime(2002, 12, 22, 0, 0, 0, DateTimeKind.Utc),
-                PhoneNumber = "+989051877561",
+                PhoneCountryCode = 98,
+                PhoneNumber = 9051877561,
                 BankAccountNumber = "1234123412341234"
             });
 

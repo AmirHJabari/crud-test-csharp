@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230108221305_InitializeMigration")]
+    [Migration("20230109071356_InitializeMigration")]
     partial class InitializeMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,10 +55,11 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("character varying(15)");
+                    b.Property<byte>("PhoneCountryCode")
+                        .HasColumnType("smallint");
+
+                    b.Property<long>("PhoneNumber")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

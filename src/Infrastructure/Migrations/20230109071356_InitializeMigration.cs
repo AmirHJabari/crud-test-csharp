@@ -20,7 +20,8 @@ namespace Infrastructure.Migrations
                     LastName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "character varying(15)", maxLength: 15, nullable: false),
+                    PhoneCountryCode = table.Column<byte>(type: "smallint", nullable: false),
+                    PhoneNumber = table.Column<long>(type: "bigint", nullable: false),
                     BankAccountNumber = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false)
                 },
                 constraints: table =>

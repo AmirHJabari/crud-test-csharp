@@ -19,8 +19,10 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder.Property(b => b.DateOfBirth)
             .IsRequired();
 
+        builder.Property(x => x.PhoneCountryCode)
+            .IsRequired();
+
         builder.Property(x => x.PhoneNumber)
-            .HasMaxLength(15)
             .IsRequired();
 
         builder.Property(b => b.Email)

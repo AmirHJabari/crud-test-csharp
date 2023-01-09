@@ -1,4 +1,6 @@
-﻿namespace Application.Entities.Customers.Commands.CreateCustomerCommand;
+﻿using PhoneNumbers;
+
+namespace Application.Entities.Customers.Commands.CreateCustomerCommand;
 
 public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCommand>
 {
@@ -16,16 +18,30 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
             .NotEmpty();
 
         RuleFor(b => b.PhoneNumber)
-            .Length(9, 15)
+            .Must(IsValidNumber)
+                .WithMessage(c => $"'+{c.PhoneCountryCode} {c.PhoneNumber}' is not a valid phone number.")
             .NotEmpty();
         
         RuleFor(b => b.Email)
-            .MaximumLength(255)
             .EmailAddress()
+            .MaximumLength(255)
             .NotEmpty();
 
         RuleFor(b => b.BankAccountNumber)
-            .Length(16)
+            .CreditCard()
             .NotEmpty();
+    }
+
+    bool IsValidNumber(CreateCustomerCommand request, long num)
+    {
+        try
+        {
+            var phone = PhoneNumberUtil.GetInstance().Parse($"+{request.PhoneCountryCode}{num}", "");
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

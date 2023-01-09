@@ -6,7 +6,8 @@ public class CreateCustomerCommand : IRequest<ApiResult<int>>
     public string LastName { get; set; }
     public string Email { get; set; }
     public DateTime DateOfBirth { get; set; }
-    public string PhoneNumber { get; set; }
+    public byte PhoneCountryCode { get; set; }
+    public long PhoneNumber { get; set; }
     public string BankAccountNumber { get; set; }
 }
 
@@ -29,7 +30,8 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
             LastName = request.LastName,
             BankAccountNumber = request.BankAccountNumber,
             DateOfBirth = request.DateOfBirth.ToUniversalTime(),
-            PhoneNumber = request.PhoneNumber
+            PhoneNumber = request.PhoneNumber,
+            PhoneCountryCode = request.PhoneCountryCode
         };
 
         await _context.Customers.AddAsync(entity);
