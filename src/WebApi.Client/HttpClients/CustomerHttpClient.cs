@@ -6,6 +6,7 @@ using Application.Entities.Customers.Queries.GetCustomerById;
 using Application.Entities.Customers.Commands.DeleteCustomerById;
 using Application.Entities.Customers.Queries.GetCustomersWithPagination;
 using Application.Common.Models;
+using Application.Entities.Customers.Commands.EditCustomerCommand;
 
 namespace WebApi.Client.HttpClients;
 
@@ -69,6 +70,20 @@ public class CustomerHttpClient : IDisposable
     public async Task<ApiResult<bool>> DeleteCustomerByIdAsync(DeleteCustomerById request, CancellationToken cancellationToken = default)
     {
         var res = await _client.DeleteAsync($"api/v1/Customers?Id={request.Id}", cancellationToken);
+
+        if (!res.IsSuccessStatusCode)
+        {
+            throw await GetPropperException(res);
+        }
+
+        return await res.Content.ReadFromJsonAsync<ApiResult<bool>>(cancellationToken: cancellationToken);
+    }
+
+    /// <exception cref="ApiNotFoundException"/>
+    /// <exception cref="ApiBaseException"/>
+    public async Task<ApiResult<bool>> EditCustomerByIdAsync(EditCustomerCommand request, CancellationToken cancellationToken = default)
+    {
+        var res = await _client.PutAsJsonAsync($"api/v1/Customers", request, cancellationToken);
 
         if (!res.IsSuccessStatusCode)
         {

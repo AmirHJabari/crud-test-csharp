@@ -1,8 +1,8 @@
 ﻿using PhoneNumbers;
 
-namespace Application.Entities.Customers.Commands.CreateCustomerCommand;
+namespace Application.Entities.Customers.Commands.EditCustomerCommand;
 
-public class EditCustomerCommandValidator : AbstractValidator<CreateCustomerCommand>
+public class EditCustomerCommandValidator : AbstractValidator<EditCustomerCommand>
 {
     public EditCustomerCommandValidator()
     {
@@ -21,7 +21,7 @@ public class EditCustomerCommandValidator : AbstractValidator<CreateCustomerComm
             .Must(IsValidNumber)
                 .WithMessage(c => $"'+{c.PhoneCountryCode} {c.PhoneNumber}' is not a valid phone number.")
             .NotEmpty();
-        
+
         RuleFor(b => b.Email)
             .EmailAddress()
             .MaximumLength(255)
@@ -32,7 +32,7 @@ public class EditCustomerCommandValidator : AbstractValidator<CreateCustomerComm
             .NotEmpty();
     }
 
-    bool IsValidNumber(CreateCustomerCommand request, long num)
+    bool IsValidNumber(EditCustomerCommand request, long num)
     {
         try
         {

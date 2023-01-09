@@ -1,9 +1,11 @@
 ﻿using Application.Entities.Customers.Commands.CreateCustomerCommand;
 using Application.Entities.Customers.Commands.DeleteCustomerById;
+using Application.Entities.Customers.Commands.EditCustomerCommand;
 using Application.Entities.Customers.Queries.GetCustomerById;
 using Application.Entities.Customers.Queries.GetCustomersWithPagination;
 using Ductus.FluentDocker.Commands;
 using FluentAssertions;
+using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using WebApi.Client.Exceptions;
 using WebApi.Client.HttpClients;
@@ -118,6 +120,42 @@ public class ManageCustomer
         foreach (var cc in createdCustomers)
         {
             customers.Data.Items.First(c => c.Id == cc.Item1).Should().BeEquivalentTo(cc.Item2);
+        }
+    }
+
+
+
+    [When(@"Edited with following information")]
+    public async Task WhenEditedWithFollowingInformation(Table table)
+    {
+        var commands = table.CreateSet<EditCustomerCommand>().ToList();
+        var createdCustomersId = _scenarioContext.Get<List<int>>("CreatedCustomersId");
+
+        for (int i = 0; i < createdCustomersId.Count; i++)
+        {
+            var id = createdCustomersId[i];
+            var command = commands[i];
+            command.Id = id;
+
+            var res = await _client.EditCustomerByIdAsync(command);
+            res.Data.Should().BeTrue();
+        }
+    }
+
+    [Then(@"Customers are edited successfully")]
+    public async Task ThenCustomersAreEditedSuccessfully(Table table)
+    {
+        var commands = table.CreateSet<EditCustomerCommand>().ToList();
+        var createdCustomersId = _scenarioContext.Get<List<int>>("CreatedCustomersId");
+
+        for (int i = 0; i < createdCustomersId.Count; i++)
+        {
+            var id = createdCustomersId[i];
+            var command = commands[i];
+            command.Id = id;
+
+            var res = await _client.GetCustomerByIdAsync(new() { Id = id });
+            res.Data.Should().BeEquivalentTo(command);
         }
     }
 }

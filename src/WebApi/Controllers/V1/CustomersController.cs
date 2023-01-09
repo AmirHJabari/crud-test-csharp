@@ -6,6 +6,7 @@ using Application.Entities.Customers.Commands.CreateCustomerCommand;
 using Application.Entities.Customers.Queries.GetCustomerById;
 using Application.Entities.Customers.Commands.DeleteCustomerById;
 using Application.Entities.Customers.Queries.GetCustomersWithPagination;
+using Application.Entities.Customers.Commands.EditCustomerCommand;
 
 namespace WebApi.Controllers.V1;
 
@@ -35,6 +36,13 @@ public class CustomersController : ApiControllerBase<CustomersController>
 
     [HttpDelete]
     public async Task<ActionResult<ApiResult<bool>>> DeleteById([FromQuery] DeleteCustomerById request,
+        CancellationToken cancellationToken)
+    {
+        return await Mediator.Send(request, cancellationToken);
+    }
+
+    [HttpPut]
+    public async Task<ActionResult<ApiResult<bool>>> Edit(EditCustomerCommand request,
         CancellationToken cancellationToken)
     {
         return await Mediator.Send(request, cancellationToken);

@@ -140,7 +140,7 @@ namespace AcceptanceTests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Customers get deleted successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 10
+#line 11
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -174,13 +174,13 @@ namespace AcceptanceTests.Features
                             "98",
                             "9051877561",
                             "5422570172410822"});
-#line 11
+#line 12
   testRunner.Given("Following customers created", ((string)(null)), table2, "Given ");
 #line hidden
-#line 15
+#line 16
   testRunner.When("Created customers in previous step get deleted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 16
+#line 17
   testRunner.Then("Customers are deleted successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -195,7 +195,7 @@ namespace AcceptanceTests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Customers pagination returns correct data get", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 18
+#line 20
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -285,11 +285,114 @@ namespace AcceptanceTests.Features
                             "98",
                             "9051877561",
                             "5422570172410822"});
-#line 19
+#line 21
   testRunner.When("All following customers created", ((string)(null)), table3, "When ");
 #line hidden
-#line 30
+#line 32
   testRunner.Then("Customers are returned successfully with pagination", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Customers gets edited successfully")]
+        [Xunit.TraitAttribute("FeatureTitle", "Manage customer in the system")]
+        [Xunit.TraitAttribute("Description", "Customers gets edited successfully")]
+        public void CustomersGetsEditedSuccessfully()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Customers gets edited successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 35
+ this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                            "FirstName",
+                            "LastName",
+                            "Email",
+                            "DateOfBirth",
+                            "PhoneCountryCode",
+                            "PhoneNumber",
+                            "BankAccountNumber"});
+                table4.AddRow(new string[] {
+                            "Amir H.",
+                            "Jabari",
+                            "test31@gmail.com",
+                            "2002-03-21",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+                table4.AddRow(new string[] {
+                            "Amir H.",
+                            "Jabari",
+                            "test32@gmail.com",
+                            "2002-03-23",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+#line 36
+  testRunner.Given("Following customers created", ((string)(null)), table4, "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                            "FirstName",
+                            "LastName",
+                            "Email",
+                            "DateOfBirth",
+                            "PhoneCountryCode",
+                            "PhoneNumber",
+                            "BankAccountNumber"});
+                table5.AddRow(new string[] {
+                            "Amir Y.",
+                            "Jabari",
+                            "test33@gmail.com",
+                            "2002-02-21",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+                table5.AddRow(new string[] {
+                            "Amir X.",
+                            "Jabari",
+                            "test34@gmail.com",
+                            "2002-02-23",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+#line 40
+  testRunner.When("Edited with following information", ((string)(null)), table5, "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                            "FirstName",
+                            "LastName",
+                            "Email",
+                            "DateOfBirth",
+                            "PhoneCountryCode",
+                            "PhoneNumber",
+                            "BankAccountNumber"});
+                table6.AddRow(new string[] {
+                            "Amir Y.",
+                            "Jabari",
+                            "test33@gmail.com",
+                            "2002-02-21",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+                table6.AddRow(new string[] {
+                            "Amir X.",
+                            "Jabari",
+                            "test34@gmail.com",
+                            "2002-02-23",
+                            "98",
+                            "9051877561",
+                            "5422570172410822"});
+#line 44
+  testRunner.Then("Customers are edited successfully", ((string)(null)), table6, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

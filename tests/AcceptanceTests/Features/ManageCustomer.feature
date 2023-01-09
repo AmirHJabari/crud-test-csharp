@@ -7,6 +7,7 @@
 			| Amir H.   | Jabari   | test2@gmail.com | 2002-12-03  | 98               | 9051877561  | 5422570172410822  |
 		Then the customers are created successfully
 
+
 	Scenario: Customers get deleted successfully
 		Given Following customers created
 			| FirstName | LastName | Email            | DateOfBirth | PhoneCountryCode | PhoneNumber | BankAccountNumber |
@@ -14,6 +15,7 @@
 			| Amir H.   | Jabari   | test22@gmail.com | 2002-12-23  | 98               | 9051877561  | 5422570172410822  |
 		When Created customers in previous step get deleted
 		Then Customers are deleted successfully
+		
 
 	Scenario: Customers pagination returns correct data get
 		When All following customers created
@@ -28,3 +30,18 @@
 			| Amir H.   | Jabari   | test28@gmail.com | 2002-12-29  | 98               | 9051877561  | 5422570172410822  |
 			| Amir H.   | Jabari   | test29@gmail.com | 2002-12-30  | 98               | 9051877561  | 5422570172410822  |
 		Then Customers are returned successfully with pagination
+		
+
+	Scenario: Customers gets edited successfully
+		Given Following customers created
+			| FirstName | LastName | Email            | DateOfBirth | PhoneCountryCode | PhoneNumber | BankAccountNumber |
+			| Amir H.   | Jabari   | test31@gmail.com | 2002-03-21  | 98               | 9051877561  | 5422570172410822  |
+			| Amir H.   | Jabari   | test32@gmail.com | 2002-03-23  | 98               | 9051877561  | 5422570172410822  |
+		When Edited with following information
+			| FirstName | LastName | Email            | DateOfBirth | PhoneCountryCode | PhoneNumber | BankAccountNumber |
+			| Amir Y.   | Jabari   | test33@gmail.com | 2002-02-21  | 98               | 9051877561  | 5422570172410822  |
+			| Amir X.   | Jabari   | test34@gmail.com | 2002-02-23  | 98               | 9051877561  | 5422570172410822  |
+		Then Customers are edited successfully
+			| FirstName | LastName | Email            | DateOfBirth | PhoneCountryCode | PhoneNumber | BankAccountNumber |
+			| Amir Y.   | Jabari   | test33@gmail.com | 2002-02-21  | 98               | 9051877561  | 5422570172410822  |
+			| Amir X.   | Jabari   | test34@gmail.com | 2002-02-23  | 98               | 9051877561  | 5422570172410822  |
