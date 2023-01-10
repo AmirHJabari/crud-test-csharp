@@ -1,0 +1,13 @@
+﻿<div class="mt-5 text-center @Class">
+    <MudText Typo="Typo.h5" Class="mb-4">@Title</MudText>
+    <MudImage Src="/images/assets/empty_data_icon.png" Alt="No Content Image" />
+</div>
+
+@code {
+    [Parameter]
+    public string Class { get; set; }
+
+    // Demonstrates how a parent component can supply parameters
+    [Parameter]
+    public string Title { get; set; }
+}

@@ -6,3 +6,4 @@ global using Application.Common.Interfaces;
 global using Application.Common.Exceptions;
 global using Domain.ValueObjects;
 global using AutoMapper;
+global using ValidationException = Application.Common.Exceptions.ValidationException;

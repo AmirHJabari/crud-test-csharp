@@ -137,7 +137,7 @@ public class ManageCustomer
             var command = commands[i];
             command.Id = id;
 
-            var res = await _client.EditCustomerByIdAsync(command);
+            var res = await _client.EditCustomerAsync(command);
             res.Data.Should().BeTrue();
         }
     }

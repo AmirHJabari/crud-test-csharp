@@ -27,19 +27,12 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-
+      
   webui:
     image: ${DOCKER_REGISTRY-}webui
-    depends_on:
-     - webapi
     build:
       context: .
       dockerfile: src/WebUI/Dockerfile
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Dockercompose
-      - ASPNETCORE_URLS=http://+:80
-    ports:
-      - "6440:80"
 
 volumes:
   postgres_data:

@@ -79,9 +79,10 @@ public class CustomerHttpClient : IDisposable
         return await res.Content.ReadFromJsonAsync<ApiResult<bool>>(cancellationToken: cancellationToken);
     }
 
+    /// <exception cref="ApiValidationException"/>
     /// <exception cref="ApiNotFoundException"/>
     /// <exception cref="ApiBaseException"/>
-    public async Task<ApiResult<bool>> EditCustomerByIdAsync(EditCustomerCommand request, CancellationToken cancellationToken = default)
+    public async Task<ApiResult<bool>> EditCustomerAsync(EditCustomerCommand request, CancellationToken cancellationToken = default)
     {
         var res = await _client.PutAsJsonAsync($"api/v1/Customers", request, cancellationToken);
 
