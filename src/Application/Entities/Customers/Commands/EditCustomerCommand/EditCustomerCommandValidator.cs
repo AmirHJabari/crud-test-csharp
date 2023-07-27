@@ -1,4 +1,4 @@
-﻿using PhoneNumbers;
+﻿using Application.Common;
 
 namespace Application.Entities.Customers.Commands.EditCustomerCommand;
 
@@ -18,7 +18,7 @@ public class EditCustomerCommandValidator : AbstractValidator<EditCustomerComman
             .NotEmpty();
 
         RuleFor(b => b.PhoneNumber)
-            .Must(IsValidNumber)
+            .Must((x, phone) => Validations.IsValidPhoneNumber(x.PhoneCountryCode, phone))
                 .WithMessage(c => $"'+{c.PhoneCountryCode} {c.PhoneNumber}' is not a valid phone number.")
             .NotEmpty();
 
@@ -30,18 +30,5 @@ public class EditCustomerCommandValidator : AbstractValidator<EditCustomerComman
         RuleFor(b => b.BankAccountNumber)
             .CreditCard()
             .NotEmpty();
-    }
-
-    bool IsValidNumber(EditCustomerCommand request, long num)
-    {
-        try
-        {
-            var phone = PhoneNumberUtil.GetInstance().Parse($"+{request.PhoneCountryCode}{num}", "");
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
     }
 }
