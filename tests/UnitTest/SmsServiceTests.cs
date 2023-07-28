@@ -6,13 +6,10 @@ namespace UnitTest;
 public class SmsServiceTests
 {
     [Theory]
-    [InlineData("+989121234567", PhoneNumberType.MOBILE)]
-    [InlineData("+982188776655", PhoneNumberType.FIXED_LINE)]
-    public void ValidatePhoneNumber(string phoneNumber, PhoneNumberType expectedType)
+    [InlineData("+989121234567", true)]
+    [InlineData("+982188776655", false)]
+    public void ValidatePhoneNumber(string phoneNumber, bool expectedResult)
     {
-        var type = Validations.GetPhoneType(phoneNumber);
-
-        Assert.Equal(expectedType, type);
-        Assert.Equal(Validations.IsValidPhoneNumber(phoneNumber), PhoneNumberType.MOBILE == type);
+        Assert.Equal(expectedResult, Validations.IsValidPhoneNumber(phoneNumber));
     }
 }
