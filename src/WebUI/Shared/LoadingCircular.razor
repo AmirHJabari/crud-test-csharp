@@ -1,0 +1,14 @@
+<div class="mt-5 d-flex justify-content-center align-items-center flex-column @Class" style="gap: 10px;">
+    <MudProgressCircular Style="@ProgressStyle" Class="mx-auto" Color="Color.Primary" Indeterminate="true" />
+    <MudText>Loading</MudText>
+</div>
+
+@code
+{
+    [Parameter]
+    public int Size { get; set; } = 50;
+    [Parameter]
+    public string Class { get; set; }
+
+    public string ProgressStyle => $"height: {Size}px; width: {Size}px;";
+}

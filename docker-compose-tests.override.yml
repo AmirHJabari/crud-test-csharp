@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  crudtest.db:
+    volumes:
+     - postgres_data_tests:/var/lib/postgresql/data
+     
+volumes:
+  postgres_data_tests:

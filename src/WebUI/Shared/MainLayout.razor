@@ -1,0 +1,29 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider IsDarkMode=@_isDarkMode IsDarkModeChanged="OnThemeToggled" />
+
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+
+<MudLayout>
+    <MudAppBar Elevation="0" Style="backdrop-filter: blur(12px);"></MudAppBar>
+    <MudAppBar Elevation="7">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudSpacer />
+        <MudToggleIconButton @bind-Toggled=_isDarkMode
+                             Icon="@Icons.Material.Filled.DarkMode" Title="Dark Mode"
+                             ToggledIcon="@Icons.Material.Filled.LightMode" ToggledTitle="Ligth Mode" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="3" ClipMode="DrawerClipMode.Docked">
+        <MudDrawerHeader Class="pb-0">
+            <MudText Typo="Typo.h6">WebWasm</MudText>
+        </MudDrawerHeader>
+        <MudDivider Class="mb-2" />
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="pt-8">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>

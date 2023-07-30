@@ -1,0 +1,30 @@
+@for (int i = 0; i < Headers.Length; i++)
+{
+    var item = Headers[i];
+
+    if (i < Headers.Length -1)
+    {
+        <a href="@Urls[i]">@item</a> <span class="mx-2 h4 oi oi-chevron-right"></span>
+    }
+    else
+    {
+        <a>@item</a>
+    }
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        string url = "";
+        for (int i = 0; i < Headers.Length; i++)
+        {
+            var item = Headers[i];
+            url += $"/{item}";
+            Urls.Add(url);
+        }
+    }
+    
+    [Parameter]
+    public string[] Headers { get; set; }
+    public List<string> Urls { get; set; } = new();
+}

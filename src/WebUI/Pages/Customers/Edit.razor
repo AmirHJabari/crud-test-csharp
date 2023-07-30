@@ -1,0 +1,121 @@
+@page "/Customers/edit/{Id:int}"
+@inject CustomerHttpClient _client
+@inject ISnackbar _snackbar
+@using Application.Entities.Customers.Commands.EditCustomerCommand
+@using Application.Entities.Customers.Queries.GetCustomerById
+@inject NavigationManager NavigationManager
+
+<PageTitle>Customers > Edit</PageTitle>
+
+<h1 class="mb-4 h2"><RoutsWithOrder Headers=@(new string[] {"Customers", "Edit"}) /></h1>
+
+<EditForm Model="Form" OnValidSubmit="OnSubmit">
+    <FluentValidator></FluentValidator>
+
+    <div class="form-group mb-3 col-md-6">
+        <MudTextField @bind-Value="Form.FirstName" Label="First name" Variant="Variant.Outlined" Margin="Margin.Dense" />
+        <ValidationMessage For="() => Form.FirstName"></ValidationMessage>
+    </div>
+    <div class="form-group mb-3 col-md-6">
+        <MudTextField @bind-Value="Form.LastName" Label="Last name" Variant="Variant.Outlined" Margin="Margin.Dense" />
+        <ValidationMessage For="() => Form.LastName"></ValidationMessage>
+    </div>
+    <div class="form-group mb-3 col-md-6">
+        <MudTextField @bind-Value="Form.Email" Label="Email" Variant="Variant.Outlined" Margin="Margin.Dense" />
+        <ValidationMessage For="() => Form.Email"></ValidationMessage>
+    </div>
+    <div class="form-group mb-3 col-md-6">
+        <MudDatePicker @bind-Date="Date" Label="Date of birth" Variant="Variant.Outlined" Margin="Margin.Dense" />
+        <ValidationMessage For="() => Form.DateOfBirth"></ValidationMessage>
+    </div>
+    <div class="form-group mb-3 col-md-6">
+        <MudTextField @bind-Value="Form.BankAccountNumber" Label="Credit card" Variant="Variant.Outlined" Margin="Margin.Dense" />
+        <ValidationMessage For="() => Form.BankAccountNumber"></ValidationMessage>
+    </div>
+
+    <div class="form-group mb-3 col-md-6">
+        <div class="row">
+            <div class="col-3">
+                <MudNumericField @bind-Value="Form.PhoneCountryCode" T="short" Label="Country code" Variant="Variant.Outlined" Margin="Margin.Dense"
+                                 HideSpinButtons="true" Min="0" />
+            </div>
+            <div class="col-9">
+                <MudNumericField @bind-Value="Form.PhoneNumber" T="long" Label="Phone number" Variant="Variant.Outlined" Margin="Margin.Dense"
+                                 HideSpinButtons="true" Min="0" />
+            </div>
+            <div class="col-12">
+                <ValidationMessage For="() => Form.PhoneNumber"></ValidationMessage>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <MudButton ButtonType="ButtonType.Submit" class="font-monospace" Variant="Variant.Filled" EndIcon="@(Icons.Material.Filled.Edit)" Color="Color.Warning">Edit</MudButton>
+    </div>
+</EditForm>
+
+@code
+{
+    [Parameter]
+    public int Id { get; set; }
+    public DateTime? Date
+    {
+        get => Form.DateOfBirth;
+        set => Form.DateOfBirth = value ?? default;
+    }
+
+    [Inject]
+    public ILocalStorageService LocalStorage { get; set; }
+    private EditCustomerCommand Form { get; set; } = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                var res = await _client.GetCustomerByIdAsync(new() { Id = Id });
+
+                Form.Id = res.Data.Id;
+                Form.FirstName = res.Data.FirstName;
+                Form.LastName = res.Data.LastName;
+                Form.Email = res.Data.Email;
+                Form.PhoneNumber = res.Data.PhoneNumber;
+                Form.PhoneCountryCode = res.Data.PhoneCountryCode;
+                Form.BankAccountNumber = res.Data.BankAccountNumber;
+                Form.DateOfBirth = res.Data.DateOfBirth;
+
+                StateHasChanged();
+            }
+            catch (Exception ex)
+            {
+                await LocalStorage.SetItemAsStringAsync("ShowErrorMessage", ex.Message);
+                NavigationManager.NavigateTo("/Customers");
+            }
+        }
+    }
+
+    private async Task OnSubmit(EditContext context)
+    {
+        try
+        {
+            await _client.EditCustomerAsync(Form);
+            NavigationManager.NavigateTo("/Customers");
+        }
+        catch (ApiValidationException ex)
+        {
+            var errors = ex.Result.Data.Values.SelectMany(s => s).ToList();
+            errors.Add(ex.Result.Message);
+            _snackbar.Add(string.Join("<br/>", errors), Severity.Error);
+        }
+        catch (ApiBaseException ex)
+        {
+            _snackbar.Add(ex.Result.Message, Severity.Error);
+        }
+        catch (Exception ex)
+        {
+            _snackbar.Add(ex.Message, Severity.Error);
+            Console.WriteLine(ex);
+        }
+    }
+}

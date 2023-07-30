@@ -1,0 +1,52 @@
+@page "/Customers"
+@using Application.Entities.Customers.Queries.GetCustomersWithPagination
+
+<PageTitle>Customers</PageTitle>
+
+<h1 class="mb-4 h2">Customers</h1>
+
+<MudPaper Class="d-flex mb-5 p-3" Elevation="4">
+    <MudSpacer />
+    <MudButton class="ms-auto font-monospace" Href="/Customers/insert" Variant="Variant.Filled" EndIcon="@(Icons.Material.Filled.Add)" Color="Color.Primary">Insert</MudButton>
+</MudPaper>
+
+@if (Customers is null)
+{
+    <LoadingCircular />
+}
+else if (!Customers.Items.Any())
+{
+    <NoContent Title="There is no tag to display!" />
+}
+
+<MudTable Class=@CustomersTableClass Height="490px" HorizontalScrollbar="true"
+    ServerData="@(new Func<TableState, Task<TableData<CustomerPaginationDto>>>(ReloadCustomersTableData))" @ref="customersTable"
+    FixedFooter="true" FixedHeader="true" Dense="true" Striped="true" Hover="true" SortLabel="Sort By" Elevation="0">
+    <HeaderContent>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<CustomerPaginationDto, object>(x => x.Id)">Id</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<CustomerPaginationDto, object>(x => ToFullName(x.FirstName, x.LastName))">Name</MudTableSortLabel></MudTh>
+        <MudTh>Email</MudTh>
+        <MudTh>Phone number</MudTh>
+        <MudTh>Date of birth</MudTh>
+        <MudTh>Actions</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@ToFullName(context.FirstName, context.LastName)</MudTd>
+        <MudTd DataLabel="Email">@context.Email</MudTd>
+        <MudTd DataLabel="Phone number">@($"+{context.PhoneCountryCode} {context.PhoneNumber}")</MudTd>
+        <MudTd DataLabel="Date of birth">@context.DateOfBirth.ToShortDateString()</MudTd>
+        <MudTd DataLabel="Actions">
+            <MudIconButton Href=@($"/Customers/edit/{context.Id}") Variant="Variant.Filled" Icon="@Icons.Material.Filled.Edit" />
+                <MudIconButton Variant="Variant.Filled" Icon="@Icons.Material.Filled.Delete" OnClick="e => DeleteItemClicked(context.Id, context.FirstName)" />
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager HorizontalAlignment="HorizontalAlignment.Center" PageSizeOptions="new int[]{ 10, 20, 50}" />
+    </PagerContent>
+</MudTable>
+
+@code {
+    string CustomersTableClass => (Customers is not null && Customers.Items.Any()) ? "" : "d-none";
+    string ToFullName(string firstName, string lastName) => $"{firstName} {lastName}";
+}
